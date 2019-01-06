@@ -1,0 +1,9 @@
+{% load i18n %}
+{% autoescape off %}
+    {% blocktrans %}This email is for signup verification at {{ site_name }}.{% endblocktrans %}
+
+    {% trans "Please go to the following page to verify:" %}
+    {{ protocol }}://{{ domain }}{% url 'signup_done' uidb64=uid token=token %}
+
+    {% blocktrans %}The {{ site_name }} team{% endblocktrans %}
+{% endautoescape %}

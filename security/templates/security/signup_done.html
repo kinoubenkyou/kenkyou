@@ -1,1 +1,6 @@
-Signup Done
+{% load i18n %}
+{% if validlink %}
+    <p>{% trans "Signup verification succeeded." %}</p>
+{% else %}
+    <p>{% trans "Signup verification failed." %}</p>
+{% endif %}
