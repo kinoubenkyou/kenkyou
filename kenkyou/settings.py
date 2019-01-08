@@ -124,6 +124,9 @@ STATIC_URL = '/static/'
 # Authentication
 
 AUTH_USER_MODEL = 'security.User'
+LOGIN_URL = 'login'
+LOGIN_REDIRECT_URL = 'index'
+LOGOUT_REDIRECT_URL = 'index'
 
 
 # Email

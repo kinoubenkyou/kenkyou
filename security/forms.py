@@ -1,4 +1,6 @@
-from django.contrib.auth.forms import UserCreationForm, UsernameField
+from django.contrib.auth.forms import (
+    UserCreationForm, UsernameField, AuthenticationForm
+)
 from django.contrib.auth.tokens import default_token_generator
 from django.contrib.sites.shortcuts import get_current_site
 from django.core.mail import EmailMultiAlternatives
@@ -67,3 +69,7 @@ class SignupForm(UserCreationForm):
                 email_template_name='security/signup_verify_email.html'
             )
         return user
+
+
+class LoginForm(AuthenticationForm):
+    pass
