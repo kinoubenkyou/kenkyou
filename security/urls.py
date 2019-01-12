@@ -1,24 +1,20 @@
 from django.urls import path
 
-from .views import (
-    SignupView, SignupVerifyPendingView, SignupVerifyView,
-    LoginView, LogoutView,
-    ChangePasswordView, ChangePasswordDoneView
-)
+from . import views
 
 
 urlpatterns = [
-    path('signup/', SignupView.as_view(), name='signup'),
-    path('signup/verify/pending', SignupVerifyPendingView.as_view(),
+    path('signup/', views.SignupView.as_view(), name='signup'),
+    path('signup/verify/pending', views.SignupVerifyPendingView.as_view(),
          name='signup_verify_pending'),
-    path('signup/verify/<uidb64>/<token>/', SignupVerifyView.as_view(),
+    path('signup/verify/<uidb64>/<token>/', views.SignupVerifyView.as_view(),
          name='signup_verify'),
 
-    path('login/', LoginView.as_view(), name='login'),
-    path('logout/', LogoutView.as_view(), name='logout'),
+    path('login/', views.LoginView.as_view(), name='login'),
+    path('logout/', views.LogoutView.as_view(), name='logout'),
 
-    path('change-password/', ChangePasswordView.as_view(),
+    path('change-password/', views.ChangePasswordView.as_view(),
          name='change_password'),
-    path('change-password/done/', ChangePasswordDoneView.as_view(),
+    path('change-password/done/', views.ChangePasswordDoneView.as_view(),
          name='change_password_done')
 ]

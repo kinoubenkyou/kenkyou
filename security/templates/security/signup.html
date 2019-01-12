@@ -1,6 +1,5 @@
 {% extends "kenkyou/base.html" %}
 {% block content %}
-    <h1>Signup</h1>
     <form method="post">
         {% csrf_token %}
         {% for error in form.non_field_errors %}

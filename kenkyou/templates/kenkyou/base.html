@@ -1,6 +1,7 @@
 {% if user.is_authenticated %}
-    {{ user.username }}
+    <p>{{ user.username }}</p>
 {% else %}
-    Not logged in.
+    <p>Not logged in.</p>
 {% endif %}
+<h1>{{ title }}</h1>
 {% block content %}{% endblock %}
