@@ -55,7 +55,7 @@ ROOT_URLCONF = 'kenkyou.urls'
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': [],
+        'DIRS': [os.path.join(BASE_DIR, 'kenkyou/templates')],
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [

@@ -1,6 +1,10 @@
+{% extends "kenkyou/base.html" %}
 {% load i18n %}
-{% if validlink %}
-    <p>{% trans "Signup verification succeeded." %}</p>
-{% else %}
-    <p>{% trans "Signup verification failed." %}</p>
-{% endif %}
+{% block content %}
+    <h1>Sign Done</h1>
+    {% if validlink %}
+        <p>{% trans "Signup verification succeeded." %}</p>
+    {% else %}
+        <p>{% trans "Signup verification failed." %}</p>
+    {% endif %}
+{% endblock %}
