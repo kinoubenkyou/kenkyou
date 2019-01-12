@@ -1,5 +1,8 @@
 <form method="post">
     {% csrf_token %}
+    {% for error in form.non_field_errors %}
+        {{ error }}
+    {% endfor %}
     <div>
         {{ form.username.label_tag }} {{ form.username }}
         {{ form.username.errors }}
@@ -10,6 +13,7 @@
     </div>
     <div>
         {{ form.password1.label_tag }} {{ form.password1 }}
+        {{ form.password1.errors }}
     </div>
     <div>
         {{ form.password2.label_tag }} {{ form.password2 }}
