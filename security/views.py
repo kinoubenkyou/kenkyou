@@ -20,7 +20,7 @@ UserModel = get_user_model()
 class SignupView(FormView):
     template_name = 'security/signup.html'
     form_class = SignupForm
-    success_url = reverse_lazy('signup_verify')
+    success_url = reverse_lazy('signup_verify_pending')
 
     def form_valid(self, form):
         opts = {
@@ -31,16 +31,16 @@ class SignupView(FormView):
         return super().form_valid(form)
 
 
+class SignupVerifyPendingView(TemplateView):
+    template_name = 'security/signup_verify_pending.html'
+
+
+INTERNAL_SIGNUP_VERIFY_URL_TOKEN = 'done'
+INTERNAL_SIGNUP_VERIFY_SESSION_TOKEN = '_signup_verify_token'
+
+
 class SignupVerifyView(TemplateView):
     template_name = 'security/signup_verify.html'
-
-
-INTERNAL_VERIFY_URL_TOKEN = 'signup-verify'
-INTERNAL_VERIFY_SESSION_TOKEN = '_signup_verify_token'
-
-
-class SignupDoneView(TemplateView):
-    template_name = 'security/signup_done.html'
     token_generator = default_token_generator
 
     def get_user(self, uidb64):
@@ -68,9 +68,9 @@ class SignupDoneView(TemplateView):
 
         if self.user is not None:
             token = kwargs['token']
-            if token == INTERNAL_VERIFY_URL_TOKEN:
+            if token == INTERNAL_SIGNUP_VERIFY_URL_TOKEN:
                 session_token = self.request.session.get(
-                    INTERNAL_VERIFY_SESSION_TOKEN
+                    INTERNAL_SIGNUP_VERIFY_SESSION_TOKEN
                 )
                 if self.token_generator.check_token(self.user, session_token):
                     self.validlink = True
@@ -83,9 +83,9 @@ class SignupDoneView(TemplateView):
                     # password reset form at a URL without the token. That
                     # avoids the possibility of leaking the token in the
                     # HTTP Referer header.
-                    self.request.session[INTERNAL_VERIFY_SESSION_TOKEN] = token
+                    self.request.session[INTERNAL_SIGNUP_VERIFY_SESSION_TOKEN] = token
                     redirect_url = self.request.path.replace(
-                        token, INTERNAL_VERIFY_URL_TOKEN
+                        token, INTERNAL_SIGNUP_VERIFY_URL_TOKEN
                     )
                     return HttpResponseRedirect(redirect_url)
 
