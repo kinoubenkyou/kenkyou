@@ -1,5 +1,5 @@
 from django.contrib.auth.forms import (
-    UserCreationForm, UsernameField, AuthenticationForm
+    UserCreationForm, UsernameField, AuthenticationForm, PasswordChangeForm
 )
 from django.contrib.auth.tokens import default_token_generator
 from django.contrib.sites.shortcuts import get_current_site
@@ -72,4 +72,8 @@ class SignupForm(UserCreationForm):
 
 
 class LoginForm(AuthenticationForm):
+    pass
+
+
+class ChangePasswordForm(PasswordChangeForm):
     pass

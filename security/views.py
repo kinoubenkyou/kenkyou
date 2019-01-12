@@ -11,7 +11,7 @@ from django.urls import reverse_lazy
 from django.utils.decorators import method_decorator
 from django.utils.http import urlsafe_base64_decode
 
-from .forms import SignupForm, LoginForm
+from .forms import SignupForm, LoginForm, ChangePasswordForm
 
 
 UserModel = get_user_model()
@@ -99,3 +99,13 @@ class LoginView(django_views.LoginView):
 
 class LogoutView(django_views.LogoutView):
     pass
+
+
+class ChangePasswordView(django_views.PasswordChangeView):
+    template_name = 'security/change_password.html'
+    form_class = ChangePasswordForm
+    success_url = reverse_lazy('change_password_done')
+
+
+class ChangePasswordDoneView(django_views.PasswordChangeDoneView):
+    template_name = 'security/change_password_done.html'
