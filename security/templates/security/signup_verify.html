@@ -2,8 +2,8 @@
 {% load i18n %}
 {% block content %}
     {% if validlink %}
-        <p>{% trans "Succeeded." %}</p>
+        <p>{% trans "Done." %}</p>
     {% else %}
-        <p>{% trans "Failed." %}</p>
+        <p>{% trans "Invalid verification token." %}</p>
     {% endif %}
 {% endblock %}

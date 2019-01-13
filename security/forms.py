@@ -1,6 +1,4 @@
-from django.contrib.auth.forms import (
-    UserCreationForm, UsernameField, AuthenticationForm, PasswordChangeForm
-)
+from django.contrib.auth import forms as django_forms
 from django.contrib.auth.tokens import default_token_generator
 from django.contrib.sites.shortcuts import get_current_site
 from django.core.mail import EmailMultiAlternatives
@@ -8,15 +6,15 @@ from django.template import loader
 from django.utils.encoding import force_bytes
 from django.utils.http import urlsafe_base64_encode
 
-from .models import User
+from . import models
 
 
-class SignupForm(UserCreationForm):
+class SignupForm(django_forms.UserCreationForm):
 
     class Meta:
-        model = User
+        model = models.User
         fields = ("username", "email")
-        field_classes = {'username': UsernameField}
+        field_classes = {'username': django_forms.UsernameField}
 
     def send_mail(self, context, to_email,
                   subject_template_name, email_template_name,
@@ -25,7 +23,6 @@ class SignupForm(UserCreationForm):
         Send a django.core.mail.EmailMultiAlternatives to `to_email`.
         """
         subject = loader.render_to_string(subject_template_name, context)
-        # Email subject *must not* contain newlines
         subject = ''.join(subject.splitlines())
         body = loader.render_to_string(email_template_name, context)
 
@@ -54,11 +51,9 @@ class SignupForm(UserCreationForm):
                 site_name = domain = domain_override
             email = user.email
             context = {
-                'email': email,
                 'domain': domain,
                 'site_name': site_name,
                 'uid': urlsafe_base64_encode(force_bytes(user.pk)).decode(),
-                'user': user,
                 'token': token_generator.make_token(user),
                 'protocol': 'https' if use_https else 'http',
                 **(extra_email_context or {}),
@@ -71,9 +66,17 @@ class SignupForm(UserCreationForm):
         return user
 
 
-class LoginForm(AuthenticationForm):
+class LoginForm(django_forms.AuthenticationForm):
     pass
 
 
-class ChangePasswordForm(PasswordChangeForm):
+class ChangePasswordForm(django_forms.PasswordChangeForm):
+    pass
+
+
+class ResetPasswordForm(django_forms.PasswordResetForm):
+    pass
+
+
+class ResetPasswordVerifyForm(django_forms.SetPasswordForm):
     pass
