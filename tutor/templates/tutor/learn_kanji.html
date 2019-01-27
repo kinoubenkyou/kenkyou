@@ -1,0 +1,12 @@
+{% extends "kenkyou/base.html" %}
+{% block content %}
+    <p>Writing: {{ entry.writing }}</p>
+    <p>On Reading: {{ entry.on_reading }}</p>
+    <p>Kun Reading: {{ entry.kun_reading }}</p>
+    <p>Meaning: {{ entry.meaning }}</p>
+    <form method="post">
+        {% csrf_token %}
+        <input type="hidden" name="entry_id" value="{{ entry.id }}">
+        <input type="submit" value="Next">
+    </form>
+{% endblock %}
