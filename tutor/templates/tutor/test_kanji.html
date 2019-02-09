@@ -1,0 +1,17 @@
+{% extends "kenkyou/base.html" %}
+{% block content %}
+    <p>On Reading: {{ tested_entry.on_reading }}</p>
+    <p>Kun Reading: {{ tested_entry.kun_reading }}</p>
+    <p>Meaning: {{ tested_entry.meaning }}</p>
+    <form method="post">
+        {% csrf_token %}
+        {% for choice in choices %}
+            <div>
+                <input type="radio" id="choice_{{ forloop.counter0 }}" name="chosen_entry_id" value="{{ choice.id }}">
+                <label for="choice_{{ forloop.counter0 }}">{{ choice.writing }}</label>
+            </div>
+        {% endfor %}
+        <input type="hidden" name="tested_entry_id" value="{{ tested_entry.id }}">
+        <input type="submit" value="Choose">
+    </form>
+{% endblock %}

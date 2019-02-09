@@ -1,0 +1,16 @@
+{% extends "kenkyou/base.html" %}
+{% load i18n %}
+{% block content %}
+    {% if answer_correct %}
+        <p>{% trans "Correct answer" %}</p>
+    {% else %}
+        <p>{% trans "Incorrect answer" %}</p>
+    {% endif %}
+    <p>Writing: {{ entry.writing }}</p>
+    <p>On Reading: {{ entry.on_reading }}</p>
+    <p>Kun Reading: {{ entry.kun_reading }}</p>
+    <p>Meaning: {{ entry.meaning }}</p>
+    <form action="{{ next_link }}">
+        <input type="submit" value="Next">
+    </form>
+{% endblock %}

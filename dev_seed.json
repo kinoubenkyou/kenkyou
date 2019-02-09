@@ -1,0 +1,328 @@
+[
+  {
+    "model": "tutor.kanjientry",
+    "pk": 1,
+    "fields": {
+      "writing": "日",
+      "on_reading": "にち、じつ",
+      "kun_reading": "ひ、び、か",
+      "meaning": "day, sun, japan",
+      "order": 1
+    }
+  },
+  {
+    "model": "tutor.kanjientry",
+    "pk": 2,
+    "fields": {
+      "writing": "月",
+      "on_reading": "げつ、がつ",
+      "kun_reading": "つき",
+      "meaning": "moon, month",
+      "order": 2
+    }
+  },
+  {
+    "model": "tutor.kanjientry",
+    "pk": 3,
+    "fields": {
+      "writing": "火",
+      "on_reading": "か",
+      "kun_reading": "ひ、び、ほ",
+      "meaning": "fire",
+      "order": 3
+    }
+  },
+  {
+    "model": "tutor.kanjientry",
+    "pk": 4,
+    "fields": {
+      "writing": "水",
+      "on_reading": "すい",
+      "kun_reading": "みず",
+      "meaning": "water",
+      "order": 4
+    }
+  },
+  {
+    "model": "tutor.kanjientry",
+    "pk": 5,
+    "fields": {
+      "writing": "木",
+      "on_reading": "ぼく、もく",
+      "kun_reading": "き、こ",
+      "meaning": "tree, wood",
+      "order": 5
+    }
+  },
+  {
+    "model": "tutor.kanjientry",
+    "pk": 6,
+    "fields": {
+      "writing": "金",
+      "on_reading": "きん、こん",
+      "kun_reading": "かね、かな、がね",
+      "meaning": "metal, gold, money",
+      "order": 6
+    }
+  },
+  {
+    "model": "tutor.kanjientry",
+    "pk": 7,
+    "fields": {
+      "writing": "土",
+      "on_reading": "ど、と",
+      "kun_reading": "つち",
+      "meaning": "soil",
+      "order": 7
+    }
+  },
+  {
+    "model": "tutor.kanjientry",
+    "pk": 8,
+    "fields": {
+      "writing": "山",
+      "on_reading": "さん",
+      "kun_reading": "やま",
+      "meaning": "mountain",
+      "order": 8
+    }
+  },
+  {
+    "model": "tutor.kanjientry",
+    "pk": 9,
+    "fields": {
+      "writing": "川",
+      "on_reading": "せん",
+      "kun_reading": "かわ",
+      "meaning": "river",
+      "order": 9
+    }
+  },
+  {
+    "model": "tutor.kanjientry",
+    "pk": 10,
+    "fields": {
+      "writing": "田",
+      "on_reading": "でん",
+      "kun_reading": "た",
+      "meaning": "rice field",
+      "order": 10
+    }
+  },
+  {
+    "model": "security.user",
+    "pk": 1,
+    "fields": {
+      "password": "pbkdf2_sha256$120000$OFsQoNk2Kh5j$v+Nz5IGsxfjNQpP4Z4EnAgNke6atlkwT8dcJYMBjPbY=",
+      "last_login": null,
+      "is_superuser": true,
+      "username": "kinoubenkyou",
+      "email": "kinoubenkyou@gmail.com",
+      "is_staff": true,
+      "is_active": true,
+      "date_joined": "2019-02-04T04:42:32.969Z",
+      "groups": [],
+      "user_permissions": []
+    }
+  },
+  {
+    "model": "tutor.kanjilearningrecord",
+    "pk": 1,
+    "fields": {
+      "kanji_entry": 1,
+      "user": 1,
+      "is_learnt": false,
+      "order": null
+    }
+  },
+  {
+    "model": "tutor.kanjilearningrecord",
+    "pk": 2,
+    "fields": {
+      "kanji_entry": 2,
+      "user": 1,
+      "is_learnt": false,
+      "order": null
+    }
+  },
+  {
+    "model": "tutor.kanjilearningrecord",
+    "pk": 3,
+    "fields": {
+      "kanji_entry": 3,
+      "user": 1,
+      "is_learnt": false,
+      "order": null
+    }
+  },
+  {
+    "model": "tutor.kanjilearningrecord",
+    "pk": 4,
+    "fields": {
+      "kanji_entry": 4,
+      "user": 1,
+      "is_learnt": false,
+      "order": null
+    }
+  },
+  {
+    "model": "tutor.kanjilearningrecord",
+    "pk": 5,
+    "fields": {
+      "kanji_entry": 5,
+      "user": 1,
+      "is_learnt": false,
+      "order": null
+    }
+  },
+  {
+    "model": "tutor.kanjilearningrecord",
+    "pk": 6,
+    "fields": {
+      "kanji_entry": 6,
+      "user": 1,
+      "is_learnt": false,
+      "order": null
+    }
+  },
+  {
+    "model": "tutor.kanjilearningrecord",
+    "pk": 7,
+    "fields": {
+      "kanji_entry": 7,
+      "user": 1,
+      "is_learnt": false,
+      "order": null
+    }
+  },
+  {
+    "model": "tutor.kanjilearningrecord",
+    "pk": 8,
+    "fields": {
+      "kanji_entry": 8,
+      "user": 1,
+      "is_learnt": false,
+      "order": null
+    }
+  },
+  {
+    "model": "tutor.kanjilearningrecord",
+    "pk": 9,
+    "fields": {
+      "kanji_entry": 9,
+      "user": 1,
+      "is_learnt": false,
+      "order": null
+    }
+  },
+  {
+    "model": "tutor.kanjilearningrecord",
+    "pk": 10,
+    "fields": {
+      "kanji_entry": 10,
+      "user": 1,
+      "is_learnt": false,
+      "order": null
+    }
+  },
+  {
+    "model": "tutor.kanjitestingrecord",
+    "pk": 1,
+    "fields": {
+      "kanji_entry": 1,
+      "user": 1,
+      "is_tested": false,
+      "order": null
+    }
+  },
+  {
+    "model": "tutor.kanjitestingrecord",
+    "pk": 2,
+    "fields": {
+      "kanji_entry": 2,
+      "user": 1,
+      "is_tested": false,
+      "order": null
+    }
+  },
+  {
+    "model": "tutor.kanjitestingrecord",
+    "pk": 3,
+    "fields": {
+      "kanji_entry": 3,
+      "user": 1,
+      "is_tested": false,
+      "order": null
+    }
+  },
+  {
+    "model": "tutor.kanjitestingrecord",
+    "pk": 4,
+    "fields": {
+      "kanji_entry": 4,
+      "user": 1,
+      "is_tested": false,
+      "order": null
+    }
+  },
+  {
+    "model": "tutor.kanjitestingrecord",
+    "pk": 5,
+    "fields": {
+      "kanji_entry": 5,
+      "user": 1,
+      "is_tested": false,
+      "order": null
+    }
+  },
+  {
+    "model": "tutor.kanjitestingrecord",
+    "pk": 6,
+    "fields": {
+      "kanji_entry": 6,
+      "user": 1,
+      "is_tested": false,
+      "order": null
+    }
+  },
+  {
+    "model": "tutor.kanjitestingrecord",
+    "pk": 7,
+    "fields": {
+      "kanji_entry": 7,
+      "user": 1,
+      "is_tested": false,
+      "order": null
+    }
+  },
+  {
+    "model": "tutor.kanjitestingrecord",
+    "pk": 8,
+    "fields": {
+      "kanji_entry": 8,
+      "user": 1,
+      "is_tested": false,
+      "order": null
+    }
+  },
+  {
+    "model": "tutor.kanjitestingrecord",
+    "pk": 9,
+    "fields": {
+      "kanji_entry": 9,
+      "user": 1,
+      "is_tested": false,
+      "order": null
+    }
+  },
+  {
+    "model": "tutor.kanjitestingrecord",
+    "pk": 10,
+    "fields": {
+      "kanji_entry": 10,
+      "user": 1,
+      "is_tested": false,
+      "order": null
+    }
+  }
+]
