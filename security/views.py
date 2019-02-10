@@ -1,6 +1,6 @@
 from django.contrib.auth import get_user_model
 from django.contrib.auth.tokens import default_token_generator
-from django.contrib.auth import views as django_views
+from django.contrib.auth import views
 from django.core.exceptions import ValidationError
 from django.http import HttpResponseRedirect
 from django.views.decorators.cache import never_cache
@@ -91,29 +91,29 @@ class SignupVerifyView(TemplateView):
         return self.render_to_response(self.get_context_data())
 
 
-class LoginView(django_views.LoginView):
+class LoginView(views.LoginView):
     template_name = 'security/login.html'
     extra_context = {'title': _('Login')}
     authentication_form = forms.LoginForm
 
 
-class LogoutView(django_views.LogoutView):
+class LogoutView(views.LogoutView):
     pass
 
 
-class ChangePasswordView(django_views.PasswordChangeView):
+class ChangePasswordView(views.PasswordChangeView):
     template_name = 'security/change_password.html'
     extra_context = {'title': _('Change Password')}
     form_class = forms.ChangePasswordForm
     success_url = reverse_lazy('change_password_done')
 
 
-class ChangePasswordDoneView(django_views.PasswordChangeDoneView):
+class ChangePasswordDoneView(views.PasswordChangeDoneView):
     template_name = 'security/change_password_done.html'
     extra_context = {'title': _('Change Password Done')}
 
 
-class ResetPasswordView(django_views.PasswordResetView):
+class ResetPasswordView(views.PasswordResetView):
     template_name = 'security/reset_password.html'
     extra_context = {'title': _('Reset Password')}
     form_class = forms.ResetPasswordForm
@@ -122,7 +122,7 @@ class ResetPasswordView(django_views.PasswordResetView):
     email_template_name = 'security/reset_password_verify_email.html'
 
 
-class ResetPasswordVerifyPendingView(django_views.PasswordResetDoneView):
+class ResetPasswordVerifyPendingView(views.PasswordResetDoneView):
     template_name = 'security/reset_password_verify_pending.html'
     extra_context = {'title': _('Reset Password Verify Pending')}
 
@@ -181,7 +181,9 @@ class ResetPasswordVerifyView(FormView):
                     return super().dispatch(*args, **kwargs)
             else:
                 if self.token_generator.check_token(self.user, token):
-                    self.request.session[RESET_PASSWORD_VERIFY_TOKEN_KEY] = token
+                    self.request.session[
+                        RESET_PASSWORD_VERIFY_TOKEN_KEY
+                    ] = token
                     redirect_url = self.request.path.replace(
                         token,
                         RESET_PASSWORD_VERIFY_URL_FLAG
@@ -191,6 +193,6 @@ class ResetPasswordVerifyView(FormView):
         return self.render_to_response(self.get_context_data())
 
 
-class ResetPasswordDoneView(django_views.PasswordResetCompleteView):
+class ResetPasswordDoneView(views.PasswordResetCompleteView):
     template_name = 'security/reset_password_done.html'
     extra_context = {'title': _('Reset Password Done')}

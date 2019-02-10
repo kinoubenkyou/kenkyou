@@ -1,3 +1,7 @@
+import random
+import math
+from datetime import date, timedelta
+
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.http import HttpResponseRedirect
 from django.views.generic.base import TemplateView
@@ -6,7 +10,9 @@ from django.utils.translation import gettext_lazy as _
 
 from .models import KanjiEntry, KanjiLearningRecord, KanjiTestingRecord
 
-import random
+
+DEFAULT_BASE_INTERVAL = 1
+DEFAULT_INTERVAL_RATE = 2
 
 
 def query_string(**kwargs):
@@ -26,38 +32,34 @@ class LearnKanjiView(LoginRequiredMixin, TemplateView):
     def get(self, request):
         user_id = request.user.id
 
-        query_set = (
-            KanjiEntry.objects.filter(kanjilearningrecord__user__id=user_id,
-                                      kanjilearningrecord__is_learnt=False)
-            .exclude(kanjilearningrecord__order=None)
-            .order_by('kanjilearningrecord__order')
-        )
+        query_set = KanjiEntry.objects.filter(
+            kanjilearningrecord__user__id=user_id,
+            kanjilearningrecord__is_learnt=False
+        ).order_by('order')
 
         if query_set.count() > 0:
             entry = query_set[0]
         else:
-            query_set = KanjiEntry.objects.filter(
-                kanjilearningrecord__user__id=user_id,
-                kanjilearningrecord__is_learnt=False,
-                kanjilearningrecord__order=None
-            ).order_by('order')
-
-            if query_set.count() > 0:
-                entry = query_set[0]
-            else:
-                return HttpResponseRedirect(reverse_lazy('learn_kanji_done'))
+            return HttpResponseRedirect(reverse_lazy('learn_kanji_done'))
 
         return self.render_to_response(self.get_context_data(entry=entry))
 
     def post(self, request):
+        entry_id = request.POST['entry_id']
+
         query_set = KanjiLearningRecord.objects.filter(
             user_id=request.user.id,
-            kanji_entry__id=request.POST['entry_id']
+            kanji_entry__id=entry_id
         )
 
-        record = query_set.get()
-        record.is_learnt = True
-        record.save()
+        learning_record = query_set.get()
+        learning_record.is_learnt = True
+        learning_record.save()
+
+        KanjiTestingRecord.objects.create(
+            kanji_entry=KanjiEntry.objects.get(pk=entry_id),
+            user=request.user
+        )
 
         return HttpResponseRedirect(reverse_lazy('learn_kanji'))
 
@@ -74,31 +76,17 @@ class TestKanjiView(LoginRequiredMixin, TemplateView):
     def get(self, request):
         user_id = request.user.id
 
-        query_set = (
-            KanjiEntry.objects.filter(kanjilearningrecord__user__id=user_id,
-                                      kanjilearningrecord__is_learnt=True,
-                                      kanjitestingrecord__user__id=user_id,
-                                      kanjitestingrecord__is_tested=False)
-            .exclude(kanjitestingrecord__order=None)
-            .order_by('kanjitestingrecord__order')
-        )
+        query_set = KanjiEntry.objects.filter(
+            kanjilearningrecord__user__id=user_id,
+            kanjilearningrecord__is_learnt=True,
+            kanjitestingrecord__user__id=user_id,
+            kanjitestingrecord__test_date__lte=date.today()
+        ).order_by('order')
 
         if query_set.count() > 0:
             tested_entry = query_set[0]
-
         else:
-            query_set = KanjiEntry.objects.filter(
-                kanjilearningrecord__user__id=user_id,
-                kanjilearningrecord__is_learnt=True,
-                kanjitestingrecord__user__id=user_id,
-                kanjitestingrecord__is_tested=False,
-                kanjitestingrecord__order=None
-            ).order_by('order')
-
-            if query_set.count() > 0:
-                tested_entry = query_set[0]
-            else:
-                return HttpResponseRedirect(reverse_lazy('test_kanji_done'))
+            return HttpResponseRedirect(reverse_lazy('test_kanji_done'))
 
         choices = [tested_entry]
         query_set = KanjiEntry.objects.exclude(id=tested_entry.id)
@@ -121,13 +109,30 @@ class TestKanjiView(LoginRequiredMixin, TemplateView):
         )
 
     def post(self, request):
-        tested_entry_id = request.POST['tested_entry_id']
-        answer_correct = tested_entry_id == request.POST.get('chosen_entry_id')
+        entry_id = request.POST['tested_entry_id']
+        answer_correct = entry_id == request.POST.get('chosen_entry_id')
+
+        record = KanjiTestingRecord.objects.get(kanji_entry_id=entry_id)
+
+        if answer_correct:
+            interval = (
+                DEFAULT_BASE_INTERVAL *
+                math.pow(DEFAULT_INTERVAL_RATE, record.correct_streak)
+            )
+
+            record.correct_streak += 1
+            record.test_date += timedelta(days=interval)
+            record.save()
+
+        elif record.correct_streak != 0:
+            record.correct_streak = 0
+            record.test_date = date.today()
+            record.save()
 
         return HttpResponseRedirect(
-            reverse_lazy('test_kanji_reveal') + query_string(
-                entry_id=tested_entry_id, answer_correct=answer_correct
-            )
+            reverse_lazy('test_kanji_reveal') +
+            query_string(entry_id=entry_id,
+                         answer_correct=answer_correct)
         )
 
 

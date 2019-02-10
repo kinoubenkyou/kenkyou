@@ -15,11 +15,10 @@ class KanjiLearningRecord(models.Model):
     kanji_entry = models.ForeignKey(KanjiEntry, on_delete=models.CASCADE)
     user = models.ForeignKey(User, on_delete=models.CASCADE)
     is_learnt = models.BooleanField(default=False)
-    order = models.IntegerField(null=True, default=None)
 
 
 class KanjiTestingRecord(models.Model):
     kanji_entry = models.ForeignKey(KanjiEntry, on_delete=models.CASCADE)
     user = models.ForeignKey(User, on_delete=models.CASCADE)
-    is_tested = models.BooleanField(default=False)
-    order = models.IntegerField(null=True, default=None)
+    test_date = models.DateField(auto_now_add=True)
+    correct_streak = models.IntegerField(default=0)

@@ -1,4 +1,4 @@
-from django.contrib.auth import forms as django_forms
+from django.contrib.auth import forms
 from django.contrib.auth.tokens import default_token_generator
 from django.contrib.sites.shortcuts import get_current_site
 from django.core.mail import EmailMultiAlternatives
@@ -9,12 +9,12 @@ from django.utils.http import urlsafe_base64_encode
 from . import models
 
 
-class SignupForm(django_forms.UserCreationForm):
+class SignupForm(forms.UserCreationForm):
 
     class Meta:
         model = models.User
         fields = ("username", "email")
-        field_classes = {'username': django_forms.UsernameField}
+        field_classes = {'username': forms.UsernameField}
 
     def send_mail(self, context, to_email,
                   subject_template_name, email_template_name,
@@ -66,17 +66,17 @@ class SignupForm(django_forms.UserCreationForm):
         return user
 
 
-class LoginForm(django_forms.AuthenticationForm):
+class LoginForm(forms.AuthenticationForm):
     pass
 
 
-class ChangePasswordForm(django_forms.PasswordChangeForm):
+class ChangePasswordForm(forms.PasswordChangeForm):
     pass
 
 
-class ResetPasswordForm(django_forms.PasswordResetForm):
+class ResetPasswordForm(forms.PasswordResetForm):
     pass
 
 
-class ResetPasswordVerifyForm(django_forms.SetPasswordForm):
+class ResetPasswordVerifyForm(forms.SetPasswordForm):
     pass
