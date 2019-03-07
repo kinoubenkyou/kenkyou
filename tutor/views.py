@@ -17,11 +17,15 @@ DEFAULT_INTERVAL_RATE = 2
 
 def query_string(**kwargs):
     query_params = []
+
     for key in kwargs:
-        query_params.append(key + '=' + str(kwargs[key]).lower())
+        value = kwargs[key]
+        if value is not None and value is not False:
+            query_params.append(key + '=' + str(value))
 
     if query_params:
         return '?' + '&'.join(query_params)
+
     return ''
 
 
@@ -29,7 +33,7 @@ class LearnKanjiView(LoginRequiredMixin, TemplateView):
     template_name = 'tutor/learn_kanji.html'
     extra_context = {'title': _('Learn Kanji')}
 
-    def get(self, request):
+    def get(self, request, *args, **kwargs):
         user_id = request.user.id
 
         query_set = KanjiEntry.objects.filter(
@@ -44,7 +48,7 @@ class LearnKanjiView(LoginRequiredMixin, TemplateView):
 
         return self.render_to_response(self.get_context_data(entry=entry))
 
-    def post(self, request):
+    def post(self, request, *args, **kwargs):
         entry_id = request.POST['entry_id']
 
         query_set = KanjiLearningRecord.objects.filter(
@@ -73,7 +77,7 @@ class TestKanjiView(LoginRequiredMixin, TemplateView):
     template_name = 'tutor/test_kanji.html'
     extra_context = {'title': _('Test Kanji')}
 
-    def get(self, request):
+    def get(self, request, *args, **kwargs):
         user_id = request.user.id
 
         query_set = KanjiEntry.objects.filter(
@@ -108,11 +112,14 @@ class TestKanjiView(LoginRequiredMixin, TemplateView):
             self.get_context_data(choices=choices, tested_entry=tested_entry)
         )
 
-    def post(self, request):
+    def post(self, request, *args, **kwargs):
         entry_id = request.POST['tested_entry_id']
         answer_correct = entry_id == request.POST.get('chosen_entry_id')
 
-        record = KanjiTestingRecord.objects.get(kanji_entry_id=entry_id)
+        record = KanjiTestingRecord.objects.get(
+            kanji_entry_id=entry_id,
+            user_id=request.user.id
+        )
 
         if answer_correct:
             interval = (
@@ -130,13 +137,15 @@ class TestKanjiView(LoginRequiredMixin, TemplateView):
             record.save()
 
         return HttpResponseRedirect(
-            reverse_lazy('test_kanji_reveal') +
-            query_string(entry_id=entry_id,
-                         answer_correct=answer_correct)
+            reverse_lazy(
+                'test_kanji_reveal',
+                kwargs={'entry_id': entry_id}
+            ) +
+            query_string(answer_correct=answer_correct)
         )
 
 
-class TestKanjiRevealView(LoginRequiredMixin, TemplateView):
+class TestKanjiRevealView(TemplateView):
     template_name = 'tutor/test_kanji_reveal.html'
 
     extra_context = {
@@ -144,25 +153,13 @@ class TestKanjiRevealView(LoginRequiredMixin, TemplateView):
         'next_link': reverse_lazy('test_kanji')
     }
 
-    def get(self, request):
-        answer_correct = request.GET['answer_correct'] == str(True).lower()
+    def get(self, request, *args, **kwargs):
+        entry = KanjiEntry.objects.get(pk=kwargs.get('entry_id'))
+        answer_correct = bool(request.GET.get('answer_correct'))
 
-        if answer_correct:
-            query_set = KanjiTestingRecord.objects.filter(
-                user_id=request.user.id,
-                kanji_entry__id=request.GET['entry_id']
-            )
-
-            record = query_set.get()
-            record.is_tested = True
-            record.save()
-
-        context_data = {
-            'entry': KanjiEntry.objects.get(pk=request.GET['entry_id']),
-            'answer_correct': answer_correct
-        }
-
-        return self.render_to_response(self.get_context_data(**context_data))
+        return self.render_to_response(
+            self.get_context_data(entry=entry, answer_correct=answer_correct)
+        )
 
 
 class TestKanjiDoneView(TemplateView):
