@@ -25,7 +25,7 @@ SECRET_KEY = 'e$(20wh0kc22d+zpo@wsz&z)k4tt^jkfg!hzif0rgsb_*v!dyi'
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['localhost', 'testserver']
 
 
 # Application definition
@@ -133,3 +133,8 @@ LOGOUT_REDIRECT_URL = 'index'
 # Email
 
 EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
+
+
+# Testing
+
+FIXTURE_DIRS = ['kenkyou/fixtures']

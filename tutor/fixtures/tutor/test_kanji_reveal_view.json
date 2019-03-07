@@ -1,0 +1,13 @@
+[
+  {
+    "model": "tutor.kanjientry",
+    "pk": 1,
+    "fields": {
+      "writing": "日",
+      "on_reading": "にち、じつ",
+      "kun_reading": "ひ、び、か",
+      "meaning": "day, sun, japan",
+      "order": 1
+    }
+  }
+]

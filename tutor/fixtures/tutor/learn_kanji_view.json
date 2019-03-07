@@ -1,0 +1,96 @@
+[
+  {
+    "model": "security.user",
+    "pk": 1,
+    "fields": {
+      "password": "pbkdf2_sha256$120000$Kw3OIjg126FD$/LxG8cxbfDX68IfxfiHaJs24NkT4GB0LPdbNxiN6GQw=",
+      "last_login": null,
+      "is_superuser": true,
+      "username": "tester1",
+      "email": "tester1@kenkyou.com",
+      "is_staff": false,
+      "is_active": true,
+      "date_joined": "2019-02-24T14:58:32.349Z",
+      "groups": [],
+      "user_permissions": []
+    }
+  },
+  {
+    "model": "security.user",
+    "pk": 2,
+    "fields": {
+      "password": "pbkdf2_sha256$120000$CH2xmj4QIX6t$NZP3M2kLgDX32HIFwdPPH6VcZVhWFeJc0C/2bWqEPWw=",
+      "last_login": null,
+      "is_superuser": true,
+      "username": "tester2",
+      "email": "tester2@kenkyou.com",
+      "is_staff": false,
+      "is_active": true,
+      "date_joined": "2019-02-24T14:58:45.909Z",
+      "groups": [],
+      "user_permissions": []
+    }
+  },
+  {
+    "model": "tutor.kanjientry",
+    "pk": 1,
+    "fields": {
+      "writing": "日",
+      "on_reading": "にち、じつ",
+      "kun_reading": "ひ、び、か",
+      "meaning": "day, sun, japan",
+      "order": 1
+    }
+  },
+  {
+    "model": "tutor.kanjientry",
+    "pk": 2,
+    "fields": {
+      "writing": "月",
+      "on_reading": "げつ、がつ",
+      "kun_reading": "つき",
+      "meaning": "moon, month",
+      "order": 2
+    }
+  },
+  {
+    "model": "tutor.kanjientry",
+    "pk": 3,
+    "fields": {
+      "writing": "火",
+      "on_reading": "か",
+      "kun_reading": "ひ、び、ほ",
+      "meaning": "fire",
+      "order": 4
+    }
+  },
+  {
+    "model": "tutor.kanjientry",
+    "pk": 4,
+    "fields": {
+      "writing": "水",
+      "on_reading": "すい",
+      "kun_reading": "みず",
+      "meaning": "water",
+      "order": 3
+    }
+  },
+  {
+    "model": "tutor.kanjilearningrecord",
+    "pk": 1,
+    "fields": {
+      "kanji_entry": 1,
+      "user": 2,
+      "is_learnt": false
+    }
+  },
+  {
+    "model": "tutor.kanjilearningrecord",
+    "pk": 2,
+    "fields": {
+      "kanji_entry": 2,
+      "user": 1,
+      "is_learnt": true
+    }
+  }
+]

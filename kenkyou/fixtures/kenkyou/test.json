@@ -1,0 +1,18 @@
+[
+  {
+    "model": "security.user",
+    "pk": 1,
+    "fields": {
+      "password": "pbkdf2_sha256$120000$UJj2OeybQCBH$Yw2VAYTvqhAAxWthCMrbyc3Ed/g/IJ1rmsGHKh+ScDc=",
+      "last_login": null,
+      "is_superuser": true,
+      "username": "kinoubenkyou",
+      "email": "kinoubenkyou@gmail.com",
+      "is_staff": true,
+      "is_active": true,
+      "date_joined": "2019-02-14T17:15:56.105Z",
+      "groups": [],
+      "user_permissions": []
+    }
+  }
+]
